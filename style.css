@@ -1,0 +1,27 @@
+#display_container{
+    height: 400px;
+    width: 400px;
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 133px 133px 133px;
+}
+
+body{
+    display: flex;
+    justify-content: center;
+    border: 0;
+    margin: 0;
+    align-items: center;
+    height: 100vh;
+}
+
+.cell{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    height: 133px;
+    width: 133px;
+    font-weight: bold;
+    font-size: 40px;
+}

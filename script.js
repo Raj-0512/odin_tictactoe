@@ -98,11 +98,58 @@ const gameController  = {
 }
 
 
-gameController.playRound(0);
-gameController.playRound(6);
-gameController.playRound(1);
-gameController.playRound(8);
-gameController.playRound(2);
+const displayBoard = {
+
+    
+}
+
+function generateBoard(){
+
+    const display_container = document.createElement("div");
+    display_container.id = "display_container";
+
+    document.body.append(display_container);
+
+    const cell1 = document.createElement("div");
+    cell1.classList.add("cell");
+
+    const cell2 = document.createElement("div");
+    cell2.classList.add("cell");
+
+    const cell3 = document.createElement("div");
+    cell3.classList.add("cell");
+
+    const cell4 = document.createElement("div");
+    cell4.classList.add("cell");
+
+    const cell5 = document.createElement("div");
+    cell5.classList.add("cell");
+
+    const cell6 = document.createElement("div");
+    cell6.classList.add("cell");
+
+    const cell7 = document.createElement("div");
+    cell7.classList.add("cell");
+
+    const cell8 = document.createElement("div");
+    cell8.classList.add("cell");
+
+    const cell9 = document.createElement("div");
+    cell9.classList.add("cell");
+
+    const cells = [cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9];
+    cells.forEach(cell => display_container.append(cell));
+
+    cells.forEach((cell , index) => {
+        cell.addEventListener("click" , () => {
+            gameController.playRound(index);
+            cell.textContent = gameBoard.cells[index];
+        });
+    });
+
+}
+
+generateBoard();
 
 
 
