@@ -113,6 +113,7 @@ function generateBoard(){
     display_container.id = "display_container";
 
     document.body.append(display_container);
+    document.body.append(reset_button);
 
     const cell1 = document.createElement("div");
     cell1.classList.add("cell");
@@ -157,9 +158,24 @@ function generateBoard(){
         });
     });
 
+    reset_button.addEventListener("click" , () => {
 
+     document.getElementById("display_container").remove();
+        gameBoard.cells = ["", "", "", "", "", "", "", "", ""];
+        gameController.current_player_index = 0;
+        gameController.gameOverFlag = 0;
+
+        generateBoard();
+
+
+
+    });
 
 }
+
+const reset_button = document.createElement("button");
+reset_button.id = "reset_button";
+reset_button.textContent = "RESET";
 
 generateBoard();
 

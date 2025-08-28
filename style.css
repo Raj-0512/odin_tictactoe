@@ -1,7 +1,6 @@
 #display_container{
     height: 400px;
     width: 400px;
-    border: 1px solid black;
     display: grid;
     grid-template-columns: 133px 133px 133px;
 }
@@ -13,6 +12,8 @@ body{
     margin: 0;
     align-items: center;
     height: 100vh;
+    flex-direction: column;
+    gap: 50px;
 }
 
 .cell{
@@ -24,4 +25,20 @@ body{
     width: 133px;
     font-weight: bold;
     font-size: 40px;
+    background-color: #f5deb3;;
+}
+
+#reset_button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: transparent;
+    height: 40px;
+    width: 150px;
+    background-color: cornflowerblue;
+    font-size: 20px;
+    font-weight: bold;
+    border-radius: 5px;
+    color: white;
+    letter-spacing: 2px;
 }
