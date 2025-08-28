@@ -35,14 +35,16 @@ const gameController  = {
             gameBoard.cells[index] === this.getCurrentPlayer().marker &&
             gameBoard.cells[index + 1] === this.getCurrentPlayer().marker &&
             gameBoard.cells[index + 2] === this.getCurrentPlayer().marker) {
-            console.log(`${this.getCurrentPlayer().name} won the game`);
+            console.log(`${this.getCurrentPlayer().name} won the game`)
+            winner_display.textContent = `${this.getCurrentPlayer().name} won the game`;
             this.gameOverFlag = 1;
         }
         else if (index % 3 === 1 &&
             gameBoard.cells[index - 1] === this.getCurrentPlayer().marker &&
             gameBoard.cells[index] === this.getCurrentPlayer().marker &&
             gameBoard.cells[index + 1] === this.getCurrentPlayer().marker) {
-            console.log(`${this.getCurrentPlayer().name} won the game`);
+            console.log(`${this.getCurrentPlayer().name} won the game`)
+            winner_display.textContent = `${this.getCurrentPlayer().name} won the game`;
             this.gameOverFlag = 1;
         }
         else if (index % 3 === 2 &&
@@ -50,6 +52,7 @@ const gameController  = {
             gameBoard.cells[index - 1] === this.getCurrentPlayer().marker &&
             gameBoard.cells[index] === this.getCurrentPlayer().marker) {
             console.log(`${this.getCurrentPlayer().name} won the game`);
+            winner_display.textContent = `${this.getCurrentPlayer().name} won the game`;
             this.gameOverFlag = 1;
         }
 
@@ -59,6 +62,7 @@ const gameController  = {
             gameBoard.cells[index + 3] === this.getCurrentPlayer().marker &&
             gameBoard.cells[index + 6] === this.getCurrentPlayer().marker) {
             console.log(`${this.getCurrentPlayer().name} won the game`);
+            winner_display.textContent = `${this.getCurrentPlayer().name} won the game`;
             this.gameOverFlag = 1;
         }
         else if (index >= 3 && index < 6 &&
@@ -66,6 +70,7 @@ const gameController  = {
             gameBoard.cells[index] === this.getCurrentPlayer().marker &&
             gameBoard.cells[index + 3] === this.getCurrentPlayer().marker) {
             console.log(`${this.getCurrentPlayer().name} won the game`);
+            winner_display.textContent = `${this.getCurrentPlayer().name} won the game`;
             this.gameOverFlag = 1;
         }
         else if (index >= 6 &&
@@ -73,6 +78,7 @@ const gameController  = {
             gameBoard.cells[index - 3] === this.getCurrentPlayer().marker &&
             gameBoard.cells[index] === this.getCurrentPlayer().marker) {
             console.log(`${this.getCurrentPlayer().name} won the game`);
+            winner_display.textContent = `${this.getCurrentPlayer().name} won the game`;
             this.gameOverFlag = 1;
         }
 
@@ -82,6 +88,7 @@ const gameController  = {
             gameBoard.cells[4] === this.getCurrentPlayer().marker &&
             gameBoard.cells[8] === this.getCurrentPlayer().marker) {
             console.log(`${this.getCurrentPlayer().name} won the game`);
+            winner_display.textContent = `${this.getCurrentPlayer().name} won the game`;
             this.gameOverFlag = 1;
         }
         else if ((index === 2 || index === 4 || index === 6) &&
@@ -89,8 +96,14 @@ const gameController  = {
             gameBoard.cells[4] === this.getCurrentPlayer().marker &&
             gameBoard.cells[6] === this.getCurrentPlayer().marker) {
             console.log(`${this.getCurrentPlayer().name} won the game`);
+            winner_display.textContent = `${this.getCurrentPlayer().name} won the game`;
             this.gameOverFlag = 1;
         }
+        else if (!gameBoard.cells.includes("")) {
+            winner_display.textContent = "It's a Draw!";
+            this.gameOverFlag = 1;
+        }
+
 
 
     } ,
@@ -113,37 +126,14 @@ function generateBoard(){
     display_container.id = "display_container";
 
     document.body.append(display_container);
-    document.body.append(reset_button);
 
-    const cell1 = document.createElement("div");
-    cell1.classList.add("cell");
-
-    const cell2 = document.createElement("div");
-    cell2.classList.add("cell");
-
-    const cell3 = document.createElement("div");
-    cell3.classList.add("cell");
-
-    const cell4 = document.createElement("div");
-    cell4.classList.add("cell");
-
-    const cell5 = document.createElement("div");
-    cell5.classList.add("cell");
-
-    const cell6 = document.createElement("div");
-    cell6.classList.add("cell");
-
-    const cell7 = document.createElement("div");
-    cell7.classList.add("cell");
-
-    const cell8 = document.createElement("div");
-    cell8.classList.add("cell");
-
-    const cell9 = document.createElement("div");
-    cell9.classList.add("cell");
-
-    const cells = [cell1, cell2, cell3, cell4, cell5, cell6, cell7, cell8, cell9];
-    cells.forEach(cell => display_container.append(cell));
+    const cells = [];
+    for (let i = 0; i < 9; i++) {
+        const cell = document.createElement("div");
+        cell.classList.add("cell");
+        cells.push(cell);
+        display_container.append(cell);
+    }
 
     cells.forEach((cell , index) => {
         cell.addEventListener("click" , () => {
@@ -158,26 +148,61 @@ function generateBoard(){
         });
     });
 
-    reset_button.addEventListener("click" , () => {
-
-     document.getElementById("display_container").remove();
-        gameBoard.cells = ["", "", "", "", "", "", "", "", ""];
-        gameController.current_player_index = 0;
-        gameController.gameOverFlag = 0;
-
-        generateBoard();
-
-
-
-    });
-
+    display_container.after(reset_button);
 }
 
 const reset_button = document.createElement("button");
 reset_button.id = "reset_button";
 reset_button.textContent = "RESET";
 
+
+reset_button.addEventListener("click" , () => {
+
+    document.getElementById("display_container").remove();
+    gameBoard.cells = ["", "", "", "", "", "", "", "", ""];
+    gameController.current_player_index = 0;
+    gameController.gameOverFlag = 0;
+    winner_display.innerHTML = "";
+    generateBoard();
+
+
+
+});
+
+const winner_display = document.createElement("p");
+winner_display.id = "winner_display";
+
+document.body.prepend(winner_display);
+
+function askPlayerName() {
+
+    const overlay_container = document.createElement("div");
+    overlay_container.id = "overlay_container";
+
+    const overlay_form = document.createElement("form");
+    overlay_form.id = "overlay_form";
+    overlay_form.innerHTML = '<label> Enter Player 1 Name</label>' +
+        ' <input type="text" id="player1_name">' +
+        '<label> Enter Player 2 Name</label>' +
+        ' <input type="text" id="player2_name">' +
+        '<button id="submit" type="submit">SUBMIT</button>';
+
+
+    overlay_container.append(overlay_form);
+    document.body.append(overlay_container);
+
+    document.getElementById("submit").addEventListener("click" , (e) => {
+        e.preventDefault();
+        player1.name = document.getElementById("player1_name").value || "Player 1";
+        player2.name = document.getElementById("player2_name").value || "Player 2";
+        document.getElementById("overlay_container").remove();
+    })
+}
+
 generateBoard();
+askPlayerName();
+
+
 
 
 
